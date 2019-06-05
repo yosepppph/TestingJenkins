@@ -1,18 +1,19 @@
 pipeline {
-    agent { docker { image 'python:3.5.1' } }
+    agent none 
     stages {
-        stage('build') {
+        stage('Example Build') {
+            agent { docker 'maven:3-alpine' } 
             steps {
-                sh 'python --version'
+                echo 'Hello, Maven'
+                sh 'mvn --version'
+            }
+        }
+        stage('Example Test') {
+            agent { docker 'openjdk:8-jre' } 
+            steps {
+                echo 'Hello, JDK'
+                sh 'java -version'
             }
         }
     }
-
-    agent { docker { image 'node:6.3' } }
-    stages {
-        stage('build') {
-            steps {
-                sh 'npm --version'
-            }
-        }
 }
